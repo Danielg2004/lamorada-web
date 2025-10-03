@@ -1,0 +1,53 @@
+<div class="register-container">
+  <!-- Encabezado: logo + título -->
+  <div class="brand-header" aria-label="Registro LaMorada">
+    <img
+      class="brand-logo"
+      src="assets/logos/lamorada.png"
+      alt="LaMorada"
+      width="96"
+      height="96"
+      loading="eager"
+      decoding="async"
+    />
+    <h2 class="brand-title">Registro de Usuario</h2>
+  </div>
+
+  <form (ngSubmit)="register()">
+    <input [(ngModel)]="nombre" name="nombre" placeholder="Nombre" required />
+    <input [(ngModel)]="apellido" name="apellido" placeholder="Apellido" required />
+    <input [(ngModel)]="correo" name="correo" type="email" placeholder="Correo electrónico" required />
+
+    <input [(ngModel)]="password" name="password" type="password" placeholder="Contraseña" required />
+    <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" placeholder="Confirmar Contraseña" required />
+
+    <p class="password-note">
+      La contraseña debe tener al menos 6 caracteres, una mayúscula y un carácter especial.
+    </p>
+
+    <button type="submit" class="primary-btn">Registrarse</button>
+  </form>
+
+  <a routerLink="/login" class="login-link">¿Ya tienes cuenta? Inicia sesión</a>
+</div>
+
+<!-- ===== Modal ===== -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()" aria-hidden="true"></div>
+
+<div class="modal" *ngIf="showModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-header" [class.is-error]="modalType==='error'" [class.is-success]="modalType==='success'">
+    <div class="modal-icon" aria-hidden="true">
+      <span *ngIf="modalType==='error'">!</span>
+      <span *ngIf="modalType==='success'">✔</span>
+    </div>
+    <h3 id="modalTitle">{{ modalType === 'error' ? 'Atención' : '¡Listo!' }}</h3>
+  </div>
+
+  <div class="modal-body">
+    <p>{{ modalMessage }}</p>
+  </div>
+
+  <div class="modal-actions">
+    <button type="button" class="modal-btn" (click)="closeModal()">Entendido</button>
+  </div>
+</div>

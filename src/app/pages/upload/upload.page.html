@@ -1,0 +1,133 @@
+<div class="upload-wrapper">
+  <!-- Encabezado pequeño con acento LaMorada -->
+  <header class="hero small">
+    <div class="icon">📚</div>
+    <div class="titles">
+      <h1>Subir eBook</h1>
+      <p class="subtitle">Completa los datos y adjunta la portada y el PDF</p>
+    </div>
+  </header>
+
+  <section class="card">
+    <form (ngSubmit)="onSubmit()" novalidate>
+      <div class="grid">
+        <!-- Columna izquierda -->
+        <div class="col">
+          <div class="field">
+            <label for="title">Título <span class="req">*</span></label>
+            <input id="title" type="text" [(ngModel)]="ebook.title" name="title" required />
+          </div>
+
+          <div class="field">
+            <label for="author">Autor</label>
+            <input id="author" type="text" [(ngModel)]="ebook.author" name="author" />
+          </div>
+
+          <div class="field">
+            <label>Portada <span class="req">*</span></label>
+
+            <!-- Dropzone de imagen -->
+            <div
+              class="dropzone"
+              (click)="coverInput.click()"
+              (dragover)="onDragOver($event)"
+              (drop)="onDropCover($event)"
+            >
+              <input
+                #coverInput
+                type="file"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                hidden
+              />
+
+              <ng-container *ngIf="coverPreview; else coverPlaceholder">
+                <img [src]="coverPreview" alt="Vista previa de portada" class="cover-preview" />
+              </ng-container>
+
+              <ng-template #coverPlaceholder>
+                <div class="dz-inner">
+                  <div class="dz-icon">🖼️</div>
+                  <div class="dz-text">
+                    <b>Arrastra una imagen</b> o <u>haz clic para seleccionar</u>
+                    <div class="dz-hint">JPG, PNG, WEBP • Máx 5 MB</div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+
+            <div class="or">o</div>
+
+            <input
+              type="url"
+              placeholder="URL de portada (opcional)"
+              [(ngModel)]="ebook.coverUrl"
+              name="coverUrl"
+              (input)="onCoverUrlInput()"
+            />
+          </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="col">
+          <div class="field">
+            <label>Archivo PDF <span class="req">*</span></label>
+
+            <!-- Dropzone de PDF -->
+            <div
+              class="dropzone pdf"
+              (click)="pdfInput.click()"
+              (dragover)="onDragOver($event)"
+              (drop)="onDropPdf($event)"
+            >
+              <input
+                #pdfInput
+                type="file"
+                accept="application/pdf"
+                (change)="onPdfSelected($event)"
+                hidden
+              />
+
+              <ng-container *ngIf="ebook.pdfFile; else pdfPlaceholder">
+                <div class="pdf-pill" title="{{ ebook.pdfFile.name }}">
+                  <span class="pill-icon">📄</span>
+                  <span class="pill-name">{{ ebook.pdfFile.name }}</span>
+                  <button type="button" class="pill-clear" (click)="clearPdf($event)">✕</button>
+                </div>
+              </ng-container>
+
+              <ng-template #pdfPlaceholder>
+                <div class="dz-inner">
+                  <div class="dz-icon">📄</div>
+                  <div class="dz-text">
+                    <b>Arrastra el PDF</b> o <u>haz clic para seleccionar</u>
+                    <div class="dz-hint">Solo PDF • Máx 20 MB</div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+
+          <div class="tips">
+            <p>Consejos:</p>
+            <ul>
+              <li>El título debe ser claro y descriptivo.</li>
+              <li>La portada luce mejor en proporción 3:4.</li>
+              <li>Verifica que el PDF se abra correctamente antes de subir.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensajes -->
+      <p class="msg error" *ngIf="error">{{ error }}</p>
+      <p class="msg success" *ngIf="success">{{ success }}</p>
+
+      <!-- Acciones -->
+      <div class="actions">
+        <button type="button" class="btn ghost" (click)="reset()">Limpiar</button>
+        <button type="submit" class="btn primary" [disabled]="!isFormValid()">Subir eBook</button>
+      </div>
+    </form>
+  </section>
+</div>

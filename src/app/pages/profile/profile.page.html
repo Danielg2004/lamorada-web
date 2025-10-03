@@ -1,0 +1,38 @@
+<div class="profile-wrapper">
+  <!-- Encabezado con degradado LaMorada -->
+  <header class="hero">
+    <div class="avatar" [attr.aria-label]="fullName">
+      {{ initials }}
+    </div>
+
+    <div class="titles">
+      <h1>{{ saludo }}, <span class="highlight">{{ firstName }}</span> 👋</h1>
+      <p class="subtitle">Bienvenido a tu espacio en <b>LaMorada</b></p>
+    </div>
+  </header>
+
+  <!-- Tarjeta de información -->
+  <section class="card">
+    <h2>Tu información</h2>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="label">Nombre</span>
+        <span class="value">{{ user?.nombre || '—' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Apellido</span>
+        <span class="value">{{ user?.apellido || '—' }}</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Correo</span>
+        <span class="value email">{{ user?.correo || '—' }}</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a routerLink="/upload" class="btn primary">Subir eBook</a>
+      <a routerLink="/ebooks" class="btn ghost">Ver eBooks</a>
+    </div>
+  </section>
+</div>

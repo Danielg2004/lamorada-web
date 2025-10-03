@@ -1,0 +1,40 @@
+<div class="ebooks-wrapper">
+  <!-- Encabezado -->
+  <header class="hero small">
+    <div class="icon">📚</div>
+    <div class="titles">
+      <h1>eBooks disponibles</h1>
+      <p class="subtitle">Explora los títulos que has subido a <b>LaMorada</b></p>
+    </div>
+  </header>
+
+  <!-- Estado vacío -->
+  <section *ngIf="ebooks.length === 0" class="empty">
+    <div class="empty-card">
+      <div class="empty-emoji">🗂️</div>
+      <h3>No hay eBooks todavía</h3>
+      <p>Cuando subas tu primer eBook, aparecerá aquí.</p>
+      <a routerLink="/upload" class="btn primary">Subir mi primer eBook</a>
+    </div>
+  </section>
+
+  <!-- Lista -->
+  <section *ngIf="ebooks.length > 0" class="grid">
+    <article class="ebook-card" *ngFor="let ebook of ebooks; trackBy: trackById">
+      <div class="cover-wrap">
+        <img [src]="ebook.cover || ''" alt="Portada" class="cover" />
+      </div>
+
+      <div class="meta">
+        <h3 class="title" [title]="ebook.title">{{ ebook.title || 'Título desconocido' }}</h3>
+        <p class="author">{{ ebook.author || 'Autor desconocido' }}</p>
+        <p class="file"><span>Archivo:</span> {{ ebook.pdf || '—' }}</p>
+
+        <div class="actions">
+          <a *ngIf="ebook.cover" [href]="ebook.cover" target="_blank" rel="noopener" class="btn ghost">Ver portada</a>
+          <button type="button" class="btn danger" (click)="deleteEbook(ebook.id)">Eliminar</button>
+        </div>
+      </div>
+    </article>
+  </section>
+</div>
